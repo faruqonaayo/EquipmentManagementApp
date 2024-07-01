@@ -1,0 +1,136 @@
+﻿@page "/equipmentPage"
+@using EquipmentManagementApp.Components.Data
+<style>
+    h3{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .equipment-form{
+        width: 400px;
+        height:fit-content;
+        margin: auto;
+    }
+
+    .equipment-form > input{
+        width: 100%;
+        padding: 2px 10px;
+        margin-bottom: 10px;
+        background-color: lightgrey;
+        border: none;
+        border-radius: 15px;
+    }
+
+    .equipment-form button{
+        width: 100%;
+        padding: 5px;
+        margin-top: 15px;
+        border-radius: 8px;
+    }
+
+    .add-button{
+        background-color: forestgreen;
+        color: white;
+        border: none;
+    }
+
+    .view-button{
+        background-color: coral;
+        color: white;
+        border: none;
+    }
+
+    .equipment-table{
+    }
+
+    th{
+        width: 200px;
+        border: 2px solid grey;
+    }
+
+    td {
+        width: 200px;
+        border: 2px solid grey;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .x-btn{
+        border: none;
+        width: 30px;
+        height: 30px;
+        background-color: red;
+        color: white;
+    }
+
+    .success-message{
+        color: green;
+    }
+
+    .error-message{
+        color: red;
+    }
+</style>
+
+
+<div class="@(applyNewClass ? "hidden" : "show") equipment-form">
+    <h3>Add Equipments</h3>
+    <div class="submission-status">
+        <h6>Status: <span class="success-message">@successMessage</span><span class="error-message">@errorMessage</span></h6>
+    </div>
+    <label>Name:</label><br />
+    <input type="text" @bind = "equipmentNameInput"/><br />
+
+    <label>Category:</label><br />
+    <input type="text" @bind="equipmentCategoryInput" /><br />
+
+    <label>Description:</label><br />
+    <input type="text" @bind="equipmentDescriptionInput" /><br />
+
+    <label>Daily Rental Cost:</label><br />
+    <input type="text" @bind="equipmentDailyRentalCostInput" /><br />
+
+    <button class="add-button" @onclick = "saveButton_Clicked">Add Equipment</button>
+    <button class="view-button" @onclick="()=>ToggleClass()">View Equipments</button>
+</div>
+
+<div class="@(applyNewClass ? "show" : "hidden") equipment-table">
+    <button class = "x-btn" @onclick="()=>ToggleClass()">X</button>
+    <h3>Manage Equipments</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Daily Rental Cost</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var equipment in equipmentList)
+            {
+                <tr>
+                    <td>@equipment.Id</td>
+                    <td>@equipment.Name</td>
+                    <td>@equipment.Category</td>
+                    <td>@equipment.Description</td>
+                    <td>$@equipment.DailyRentalCost</td>
+                    <td><button style="width:100%" class="edit-btn btn-primary" @onclick="()=>editButton_clicked(equipment)">Edit</button></td>
+                    <td><button style="width:100%" class="delete-btn btn-danger" @onclick="()=>deleteButtontn_clicked(equipment)">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@code {
+
+}
